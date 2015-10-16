@@ -15,10 +15,13 @@
 # limitations under the License.
 #
 import webapp2
+from twilio import twiml
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        tw = str(twiml.Response())
+        self.response.content_type = 'application/xml'
+        self.response.write(tw)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)

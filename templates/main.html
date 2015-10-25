@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+  <h1>Aerostat</h1>
+
+  <h2>Conversation to date</h2>
+  {% for message in messages %}
+  <div>{{ message.body }}</div>
+  {% endfor %}
+  <form action="/message" method="POST">
+    <div>
+      <label>From:
+        <input type="text" name="phone_number" value="7037919267"/>
+      </label>
+    </div>
+    <div>
+      <label>Message:
+        <input type="text" name="content"/>
+      </label>
+    </div>
+    <button>Send</button>
+  </form>
+</body>
+</html>

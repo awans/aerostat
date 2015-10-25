@@ -10,3 +10,26 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Visit
+  properties:
+  - name: user
+  - name: created_at
+    direction: desc
+
+- kind: Visit
+  properties:
+  - name: user_phone_number
+  - name: created_at
+
+- kind: Visit
+  properties:
+  - name: user_phone_number
+  - name: created_at
+    direction: desc
+
+- kind: Visit
+  ancestor: yes
+  properties:
+  - name: user
+  - name: created_at
+    direction: desc

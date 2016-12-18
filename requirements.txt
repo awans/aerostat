@@ -3,3 +3,4 @@ furl==0.4.4
 enum34==0.9.18
 arrow==0.4.4
 kitchen==1.2.1
+PyYAML==3.12

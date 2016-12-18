@@ -4,7 +4,7 @@ import os
 from twilio import twiml
 from google.appengine.ext.webapp import template
 from google.appengine.ext import ndb
-import quack
+import pitch
 import operator
 
 class MainHandler(webapp2.RequestHandler):
@@ -18,10 +18,14 @@ class WebBase(webapp2.RequestHandler):
 
 class AdminHandler(WebBase):
     def get(self):
-        user = quack.User.query().filter(quack.User.phone_number == "7037919267").get()
-        visits = quack.Visit.query(ancestor=user.key).filter(quack.Visit.user == user.key)
-        messages = ndb.get_multi([m for v in visits for m in v.messages])
-        messages = sorted(messages, key=operator.attrgetter('created_at'))
+        user = pitch.User.query().filter(pitch.User.phone_number == "7037919267").get()
+        if user:
+          visits = pitch.Visit.query(ancestor=user.key).filter(pitch.Visit.user == user.key)
+          messages = ndb.get_multi([m for v in visits for m in v.messages])
+          messages = sorted(messages, key=operator.attrgetter('created_at'))
+        else:
+          visits = []
+          messages = []
 
         template_values = {
             "visits": visits,
@@ -30,7 +34,7 @@ class AdminHandler(WebBase):
         path = os.path.join(os.path.dirname(__file__), 'templates/main.html')
         self.response.out.write(template.render(path, template_values))
 
-dispatcher = quack.Dispatcher(quack.world)
+dispatcher = pitch.Dispatcher(pitch.world)
 
 class MessageHandler(webapp2.RequestHandler):
     def post(self):

@@ -1,0 +1,14 @@
+locations:
+  room_one:
+    description: "You are in a room. there is a DOOR"
+    actions:
+      door:
+        - say: You open the door
+        - goto: room_two
+
+  room_two:
+    description: "You are in a room. There is a heavy looking DOOR"
+    actions:
+      door:
+        - say: After a struggle, you manage to pull the door open. Whew
+        - goto: room_one

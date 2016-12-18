@@ -6,6 +6,8 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext import ndb
 import pitch
 import operator
+import phonenumbers
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -37,21 +39,50 @@ class AdminHandler(WebBase):
 dispatcher = pitch.Dispatcher(pitch.world)
 
 class MessageHandler(webapp2.RequestHandler):
-    def post(self):
-        phone_number = self.request.get('phone_number')
-        content = self.request.get('content')
+  def post(self):
+    phone_number = self.request.get('phone_number')
+    content = self.request.get('content')
+    logging.info("Dispatching %s from %s", content, phone_number)
+    dispatcher.run(phone_number, content)
+    tw = str(twiml.Response())
+    self.response.content_type = 'application/xml'
+    self.response.write(tw)
+    self.redirect('/admin')
 
-        logging.info("Dispatching %s from %s", content, phone_number)
-        dispatcher.dispatch(phone_number, content)
 
-        tw = str(twiml.Response())
-        self.response.content_type = 'application/xml'
-        self.response.write(tw)
+class TwilioHandler(webapp2.RequestHandler):
+  def post(self):
+    content = self.request.get('Body')
+    raw_phone_number = self.request.get('From')
+    phone_number = str(phonenumbers.parse(raw_phone_number, None).national_number)
+    logging.info("Dispatching %s from %s", content, phone_number)
+    session = dispatcher.run(phone_number, content)
+    resp = twiml.Response()
 
-        self.redirect('/admin')
+    reply = []
+    for msg in session:
+      reply.append(msg.body)
+
+    resp.message("\n".join(reply))
+    self.response.content_type = 'application/xml'
+    self.response.write(str(resp))
+
+class ResetHandler(webapp2.RequestHandler):
+  def post(self):
+    phone_number = self.request.get('phone_number')
+    user = pitch.User.query(pitch.User.phone_number == phone_number).get()
+    keys = []
+    for visit in pitch.Visit.query(ancestor=user.key).filter(pitch.Visit.user == user.key).fetch():
+      keys.append(visit.key)
+    keys.append(user.key)
+    ndb.delete_multi(keys)
+    self.redirect('/admin')
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/message', MessageHandler),
-    ('/admin', AdminHandler)
+    ('/reset', ResetHandler),
+    ('/twilio', TwilioHandler),
+    ('/admin', AdminHandler),
 ], debug=True)

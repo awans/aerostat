@@ -1,14 +1,25 @@
 locations:
-  room_one:
-    description: "You are in a room. there is a DOOR"
-    actions:
-      door:
-        - say: You open the door
-        - goto: room_two
-
-  room_two:
-    description: "You are in a room. There is a heavy looking DOOR"
-    actions:
-      door:
-        - say: After a struggle, you manage to pull the door open. Whew
-        - goto: room_one
+  - room_one:
+      description: "You are in a room. there is a DOOR and a WINDOW"
+      actions:
+        door:
+          - say: You open the door
+          - goto: room_two
+        window:
+          - say: >
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Aenean aliquam et dui at imperdiet. In hac habitasse platea dictumst.
+              Donec malesuada convallis justo, aliquet ornare nibh placerat rhoncus.
+              Integer faucibus urna sit amet lorem dapibus varius ac eu elit.
+              In sed tincidunt orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Duis non felis bibendum, varius justo nec, dignissim lorem. Etiam enim metus,
+              laoreet vel tincidunt faucibus, efficitur in risus. Morbi orci ante,
+              euismod nec ultricies eget, viverra eget urna. Praesent a vehicula arcu,
+              et gravida odio.
+          - goto: room_two
+  - room_two:
+      description: "You are in a room. There is a heavy looking DOOR"
+      actions:
+        door:
+          - say: After a struggle, you manage to pull the door open. Whew.
+          - goto: room_one

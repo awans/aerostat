@@ -1,25 +1,69 @@
 locations:
-  - room_one:
-      description: "You are in a room. there is a DOOR and a WINDOW"
+  - start:
+      description: >
+	    You wake up in a dimly lit room. The windowless walls are black, glistening. 
+	    Your bed is in the center of the room. Light is creeping out from under it. 
+	    Reply with INVESTIGATE to find the source of the light or SLEEP to tumble 
+		back into darkness.
       actions:
-        door:
-          - say: You open the door
-          - goto: room_two
-        window:
+        investigate:
           - say: >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Aenean aliquam et dui at imperdiet. In hac habitasse platea dictumst.
-              Donec malesuada convallis justo, aliquet ornare nibh placerat rhoncus.
-              Integer faucibus urna sit amet lorem dapibus varius ac eu elit.
-              In sed tincidunt orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Duis non felis bibendum, varius justo nec, dignissim lorem. Etiam enim metus,
-              laoreet vel tincidunt faucibus, efficitur in risus. Morbi orci ante,
-              euismod nec ultricies eget, viverra eget urna. Praesent a vehicula arcu,
-              et gravida odio.
-          - goto: room_two
-  - room_two:
-      description: "You are in a room. There is a heavy looking DOOR"
+		      You sit up. As your foot touches the ground you hear a soft scamper. 
+		      You’ve startled something. You pull aside the loose sheets to see what’s 
+			  underneath you.
+          - goto: do_investigate
+		    delay: 1m
+        sleep:
+          - say: >
+		      The darkness envelopes you once more. It hums, warmly.
+          - goto: do_sleep
+		    delay: 12h
+  - do_investigate:
+      description: >
+	    On your hands and knees, you look under the bed to find a stag as small as a housecat. 
+		Its fur is glowing white with the color of polished ivory; the stag is the source of 
+		the light trickling across the floor. Its dark eyes are locked on you, afraid. Its 
+		antlers look like the twigs of a birch tree. You can CRAWL under the bed after it 
+		or REACH out and offer this small creature your hand.
       actions:
-        door:
-          - say: After a struggle, you manage to pull the door open. Whew.
-          - goto: room_one
+        crawl:
+          - say: >
+		      The stag sees you moving and turns to run. He races out the other side of the 
+			  bed and bolts towards a table in the corner of the room. As he gets closer his 
+			  light reveals a small tunnel underneath the table. He darts inside. You get back
+			  on your hands and knees and follow him inside.After a struggle, you manage to pull
+			  the door open. Whew.
+          - goto: do_crawl
+		    delay: 12h
+		reach:
+		  - say: >
+		    The stag’s eyes flick between you and your outstretched hand. He watches you for a 
+			long time. Unmoving.
+		  - goto: do_reach
+		    delay: 2m
+  - do_sleep:
+      description: >
+	    You sleep pleasantly and for a long time. You dream of buildings melting slowly into the
+	    earth. Of orange and red mosaics interlocked, stretching across a sunless sky. Your eyes
+		open once more and you feel unnaturally alive. There’s sunlight reaching into the room 
+		through the edges of the door. It makes even the black walls feel warm. As you sit up, 
+		you catch sight of a small crawlspace in the corner of the room with pale white light 
+		trickling out of it. Do you CRAWL to investigate or open the DOOR and step outside?
+      actions:
+        crawl:
+          - say: >
+		    "As you get closer, you see that the crawlspace is a tunnel barely wide enough for 
+			you to fit inside. Just a few feet into the tunnel, there is the strangest thing: 
+			a small stag that’s no bigger than a housecat. His fur is pure white and it glows softly, 
+			lighting up the dark space. His little antlers look delicate enough to snap between two 
+			fingers. He sees you and holds your gaze for just a moment before turning around and 
+			running down the tunnel ahead. In this tight space, he’s much faster than you are but you 
+			crawl on after him just the same."
+          - goto: do_crawl
+		    delay: 12h
+		door:
+		  - say: >
+		    You put your hand against the door and push. The black wood is surprisingly soft to your touch. 
+			It’s very bright outside and it takes your eyes just a moment to adjust. 
+		  - goto: do_door
+		    delay: 1m

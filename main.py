@@ -7,7 +7,9 @@ from google.appengine.ext import ndb
 import pitch
 import operator
 import phonenumbers
+import pprint
 
+dispatcher = pitch.Dispatcher(pitch.world)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -17,6 +19,14 @@ class MainHandler(webapp2.RequestHandler):
 
 class WebBase(webapp2.RequestHandler):
     pass
+
+
+class ValidateHandler(WebBase):
+  def get(self):
+    self.response.out.write("<pre>" + pprint.pformat(pitch.script) + "</pre>")
+    self.response.out.write("<pre>" + pprint.pformat(pitch.world.locations) + "</pre>")
+    self.response.out.write("<pre>" + pprint.pformat(pitch.world.nodes) + "</pre>")
+
 
 class AdminHandler(WebBase):
     def get(self):
@@ -36,14 +46,15 @@ class AdminHandler(WebBase):
         path = os.path.join(os.path.dirname(__file__), 'templates/main.html')
         self.response.out.write(template.render(path, template_values))
 
-dispatcher = pitch.Dispatcher(pitch.world)
 
 class MessageHandler(webapp2.RequestHandler):
   def post(self):
     phone_number = self.request.get('phone_number')
     content = self.request.get('content')
     logging.info("Dispatching %s from %s", content, phone_number)
-    dispatcher.run(phone_number, content)
+    session = dispatcher.run(phone_number, content)
+    for msg in session:
+      msg.put()
     tw = str(twiml.Response())
     self.response.content_type = 'application/xml'
     self.response.write(tw)
@@ -62,6 +73,7 @@ class TwilioHandler(webapp2.RequestHandler):
     reply = []
     for msg in session:
       reply.append(msg.body)
+      msg.put()
 
     resp.message("\n".join(reply))
     self.response.content_type = 'application/xml'
@@ -85,4 +97,5 @@ app = webapp2.WSGIApplication([
     ('/reset', ResetHandler),
     ('/twilio', TwilioHandler),
     ('/admin', AdminHandler),
+    ('/validate', ValidateHandler),
 ], debug=True)

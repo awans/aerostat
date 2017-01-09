@@ -1,274 +1,288 @@
 locations:
   - 1.0-start:
-      description: >
-	    You wake up in a dimly lit room. The windowless walls are black, glistening. 
-	    Your bed is in the center of the room. Light is creeping out from under it. 
-	    Reply with INVESTIGATE to find the source of the light or SLEEP to tumble 
-		back into darkness.
+      enter: >
+        You wake up in a dimly lit room. The windowless walls are black, glistening.
+        Your bed is in the center of the room. Light is creeping out from under it.
+        Reply with INVESTIGATE to find the source of the light or SLEEP to tumble back into darkness.
       actions:
         investigate:
           - say: >
-		      You sit up. As your foot touches the ground you hear a soft scamper. 
-		      You’ve startled something. You pull aside the loose sheets to see what’s 
-			  underneath you.
+              You sit up. As your foot touches the ground you hear a soft scamper.
+              You've startled something. You pull aside the loose sheets to see what's underneath you.
           - goto: 1.1-investigate
-		    delay: 1m
+            delay: 1m
         sleep:
           - say: >
-		      The darkness envelopes you once more. It hums, warmly.
+              The darkness envelopes you once more. It hums, warmly.
           - goto: 1.2-sleep
-		    delay: 12h
+            delay: 12h
   - 1.1-investigate:
-      description: >
-	    On your hands and knees, you look under the bed to find a stag as small as a housecat. 
-		Its fur is glowing white with the color of polished ivory; the stag is the source of 
-		the light trickling across the floor. Its dark eyes are locked on you, afraid. Its 
-		antlers look like the twigs of a birch tree. You can CRAWL under the bed after it 
-		or REACH out and offer this small creature your hand.
+      enter: >
+        On your hands and knees, you look under the bed to find a stag as small as a housecat.
+        Its fur is glowing white with the color of polished ivory; the stag is the source of
+        the light trickling across the floor. Its dark eyes are locked on you, afraid. Its
+        antlers look like the twigs of a birch tree. You can CRAWL under the bed after it
+        or REACH out and offer this small creature your hand.
       actions:
         crawl:
           - say: >
-		      The stag sees you moving and turns to run. He races out the other side of the 
-			  bed and bolts towards a table in the corner of the room. As he gets closer his 
-			  light reveals a small tunnel underneath the table. He darts inside. You get back
-			  on your hands and knees and follow him inside.After a struggle, you manage to pull
-			  the door open. Whew.
+              The stag sees you moving and turns to run. He races out the other side of the
+              bed and bolts towards a table in the corner of the room. As he gets closer his
+              light reveals a small tunnel underneath the table. He darts inside. You get back
+              on your hands and knees and follow him inside. After a struggle, you manage to pull
+              the door open. Whew.
           - goto: 2.0-crawl
-		    delay: 12h
-		reach:
-		  - say: >
-		    The stag’s eyes flick between you and your outstretched hand. He watches you for a 
-			long time. Unmoving.
-		  - goto: 1.3-reach
-		    delay: 2m
+            delay: 12h
+        reach:
+          - say: >
+              The stag's eyes flick between you and your outstretched hand. He watches you for a
+              long time. Unmoving.
+          - goto: 1.3-reach
+            delay: 2m
   - 1.2-sleep:
-      description: >
-	    You sleep pleasantly and for a long time. You dream of buildings melting slowly into the
-	    earth. Of orange and red mosaics interlocked, stretching across a sunless sky. Your eyes
-		open once more and you feel unnaturally alive. There’s sunlight reaching into the room 
-		through the edges of the door. It makes even the black walls feel warm. As you sit up, 
-		you catch sight of a small crawlspace in the corner of the room with pale white light 
-		trickling out of it. Do you CRAWL to investigate or open the DOOR and step outside?
+      enter: >
+        You sleep pleasantly and for a long time. You dream of buildings melting slowly into the
+        earth. Of orange and red mosaics interlocked, stretching across a sunless sky. Your eyes
+        open once more and you feel unnaturally alive. There's sunlight reaching into the room
+        through the edges of the door. It makes even the black walls feel warm. As you sit up,
+        you catch sight of a small crawlspace in the corner of the room with pale white light
+        trickling out of it. Do you CRAWL to investigate or open the DOOR and step outside?
       actions:
         crawl:
           - say: >
-		    "As you get closer, you see that the crawlspace is a tunnel barely wide enough for 
-			you to fit inside. Just a few feet into the tunnel, there is the strangest thing: 
-			a small stag that’s no bigger than a housecat. His fur is pure white and it glows softly, 
-			lighting up the dark space. His little antlers look delicate enough to snap between two 
-			fingers. He sees you and holds your gaze for just a moment before turning around and 
-			running down the tunnel ahead. In this tight space, he’s much faster than you are but you 
-			crawl on after him just the same."
+              "As you get closer, you see that the crawlspace is a tunnel barely wide enough for
+              you to fit inside. Just a few feet into the tunnel, there is the strangest thing:
+              a small stag that's no bigger than a housecat. His fur is pure white and it glows softly,
+              lighting up the dark space. His little antlers look delicate enough to snap between two
+              fingers. He sees you and holds your gaze for just a moment before turning around and
+              running down the tunnel ahead. In this tight space, he's much faster than you are but you
+              crawl on after him just the same."
           - goto: 2.0-crawl
-		    delay: 12h
-		door:
-		  - say: >
-		    You put your hand against the door and push. The black wood is surprisingly soft to your touch. 
-			It’s very bright outside and it takes your eyes just a moment to adjust. 
-		  - goto: 4.0-door
-		    delay: 1m
+            delay: 12h
+        door:
+          - say: >
+              You put your hand against the door and push. The black wood is surprisingly soft to your touch.
+              It's very bright outside and it takes your eyes just a moment to adjust.
+          - goto: 4.0-door
+            delay: 1m
   - 1.3-reach:
-      description: >
-	    (TODO Describe hanging out with the stag for longer)
+      enter: >
+        (TODO Describe hanging out with the stag for longer)
       actions:
   - 2.0-crawl:
-      description: >
-	    Your lumbering crawl was no match for the stag’s quick canter. You lost sight of him in the tunnel 
-		ahead. For hours now, you’ve been crawling onwards in darkness, hands running along the walls but 
-		feeling nothing but their easy smoothness. Despair begins to set in as you ponder turning around to 
-		escape this endless black. Your right hand brushes on something distinctly metallic. Salvation? You 
-		feel along the wall and realize that there are rungs running up it. You reach above your head and 
-		feel nothing! Your legs ache, but you command them to stand. You curl your toes, relishing the 
-		feeling of the stretch along your calves. You can CLIMB up the wall to see where the rungs lead or 
-		continue your pursuit down the TUNNEL.
+      enter: >
+        Your lumbering crawl was no match for the stag's quick canter. You lost sight of him in the tunnel
+        ahead. For hours now, you've been crawling onwards in darkness, hands running along the walls but
+        feeling nothing but their easy smoothness. Despair begins to set in as you ponder turning around to
+        escape this endless black. Your right hand brushes on something distinctly metallic. Salvation? You
+        feel along the wall and realize that there are rungs running up it. You reach above your head and
+        feel nothing! Your legs ache, but you command them to stand. You curl your toes, relishing the
+        feeling of the stretch along your calves. You can CLIMB up the wall to see where the rungs lead or
+        continue your pursuit down the TUNNEL.
       actions:
         climb:
           - say: >
-		    Hand above hand, foot above foot you make your way upwards. The blackness is absolute.
-			delay: 10m
-			Your knuckle hits against an unknown ceiling with a ding. You probe above until you find what 
-			feels like a big metal handle. You pull on the handle and its catch disengages, letting a 
-			trickle of light into the blackness. You’ve found an exit. You push hard on the cover above 
-			you and it swings open. Blinding sunlight streams in. You pull yourself up the last couple 
-			rungs and cascade out of the hole onto soft grass of brilliant green. Your eyes begin to adjust, 
-			but you’re so tired now. You let the sun caress your skin. You close your eyes and return to a 
-			willing darkness. Your mind descends into sleep.
-			delay: 12h
-			When you finally wake, the sun is still shining overhead. You sit up and survey your surroundings.
+              Hand above hand, foot above foot you make your way upwards. The blackness is absolute.
+            delay: 10m
+          - say: >
+              Your knuckle hits against an unknown ceiling with a ding. You probe above until you find what
+              feels like a big metal handle. You pull on the handle and its catch disengages, letting a
+              trickle of light into the blackness. You've found an exit. You push hard on the cover above
+              you and it swings open. Blinding sunlight streams in. You pull yourself up the last couple
+              rungs and cascade out of the hole onto soft grass of brilliant green. Your eyes begin to adjust,
+              but you're so tired now. You let the sun caress your skin. You close your eyes and return to a
+              willing darkness. Your mind descends into sleep.
+            delay: 12h
+          - say: >
+              When you finally wake, the sun is still shining overhead. You sit up and survey your surroundings.
           - goto: 3.0-table
-		    delay: 12h
-		tunnel:
-		  - say: >
-		    You bend back down and feel the ache in your knees anew. You inch your way through the tunnel once 
-			more along the trail of the white stag. You wonder how you got here and what cruel whim could have 
-			possessed you to willingly choose this monotonous darkness once more. 
-		  - goto: 2.1-fear
-		    delay: 6h
+            delay: 12h
+        tunnel:
+          - say: >
+              You bend back down and feel the ache in your knees anew. You inch your way through the tunnel once
+              more along the trail of the white stag. You wonder how you got here and what cruel whim could have
+              possessed you to willingly choose this monotonous darkness once more.
+          - goto: 2.1-fear
+            delay: 6h
   - 2.1-fear:
-      description: >
-	    You’re thirsty and scared. Your hands are raw from the rough Your muscles are cramping badly and you 
-		worry that you don’t have the energy to turn back and retrace your crawl. You could try to SLEEP here 
-		in the darkness or spend the last of your energy going FORWARD and hope for an escape.
+      enter: >
+        You're thirsty and scared. Your hands are raw from the rough Your muscles are cramping badly and you
+        worry that you don't have the energy to turn back and retrace your crawl. You could try to SLEEP here
+        in the darkness or spend the last of your energy going FORWARD and hope for an escape.
       actions:
         sleep:
           - say: >
-		    "You roll onto your back, arms at your sides enclosed by this hellish tunnel. The hard floor of 
-			the tunnel isn’t much of a bed. You’re frightened, alone; but tired enough that sleep comes 
-			quickly all the same. Your dreams are awash with vibrant colors: forests of crocodile green and 
-			skies of textured blue."
-			delay: 8h
-			"You wake and know there’s something wrong. Your body is sinking into the tunnel floor. It no 
-			longer feels like rough rock but rather some thick, sinister ooze. Still on your back, you feel 
-			around to find that all the walls of tunnel are flowing down. You press your hand into the ceiling 
-			above you. It gives easily: enveloping your fingers and the top of your palm. You pull your hand 
-			back and some of the ooze is pulled with it, dripping down and around your arm."
-			delay: 1m
-			Your body is half submerged now. You manage to roll onto your belly and try to continue a desperate 
-			crawl. But what was once the ground is now so thick that there’s really no hope of moving through 
-			it. The tunnel is filling with this black ooze. Your hands and knees are sinking into it, you’re 
-			running out of space to breath. 
-			delay: 2m
-			"Your neck is crooked sideways, taking in the last slivers of air in the now liquified space that 
-			was this tunnel. Your whole body is submerged now. The ooze is warm and thick. It rises past your 
-			neck and begins to cover the right side of your face. You stretch for air. It flows into your right 
-			ear and in the ooze you hear a low murmur like dozens of tiny voices: muffled and distant. You close 
-			your eyes, replacing one absolute darkness with another. It advances up over your face, covering your 
-			mouth and rising up your nostrils. There’s no air left. No space. You let out your last breath as 
-			muffled scream. The sound of distant voices seems to pause for the briefest moment before resuming 
-			its chatter. The darkness is timeless."
+              "You roll onto your back, arms at your sides enclosed by this hellish tunnel. The hard floor of
+              the tunnel isn't much of a bed. You're frightened, alone; but tired enough that sleep comes
+              quickly all the same. Your dreams are awash with vibrant colors -- forests of crocodile green and
+              skies of textured blue."
+            delay: 8h
+          - say: >
+             "You wake and know there's something wrong. Your body is sinking into the tunnel floor. It no
+             longer feels like rough rock but rather some thick, sinister ooze. Still on your back, you feel
+             around to find that all the walls of tunnel are flowing down. You press your hand into the ceiling
+             above you. It gives easily: enveloping your fingers and the top of your palm. You pull your hand
+             back and some of the ooze is pulled with it, dripping down and around your arm."
+            delay: 1m
+          - say: >
+              Your body is half submerged now. You manage to roll onto your belly and try to continue a desperate
+              crawl. But what was once the ground is now so thick that there's really no hope of moving through
+              it. The tunnel is filling with this black ooze. Your hands and knees are sinking into it, you're
+              running out of space to breath.
+            delay: 2m
+          - say: >
+              "Your neck is crooked sideways, taking in the last slivers of air in the now liquified space that
+              was this tunnel. Your whole body is submerged now. The ooze is warm and thick. It rises past your
+              neck and begins to cover the right side of your face. You stretch for air. It flows into your right
+              ear and in the ooze you hear a low murmur like dozens of tiny voices: muffled and distant. You close
+              your eyes, replacing one absolute darkness with another. It advances up over your face, covering your
+              mouth and rising up your nostrils. There's no air left. No space. You let out your last breath as
+              muffled scream. The sound of distant voices seems to pause for the briefest moment before resuming
+              its chatter. The darkness is timeless."
           - goto: end
-		    delay: 1m
-		forward:
-		  - say: >
-		    (TODO Say something about final push out of tunnel)
+            delay: 1m
+        forward:
+          - say: >
+              (TODO Say something about final push out of tunnel)
   - 3.0-table:
-      description: >
-	    You notice a hundred feet away ahead of you there is a table. It’s smooth and black as pitch. You walk towards it.
-		delay: 1m
-		"At the closest end of the table there is a black chair and in front of the chair, on the table, there rests a 
-		single black goblet. Everything seems to be made of this strange shimmering black material. You sit down. You look 
-		into the goblet and find a liquid that might be white milk. You give it a swirl and see that the liquid is very 
-		runny: closer in consistency to water. Do you DRINK it or EXPLORE the forest further?"
+      enter: >
+        You notice a hundred feet away ahead of you there is a table. It's smooth and black as pitch. You walk towards it.
+        At the closest end of the table there is a black chair and in front of the chair, on the table, there rests a
+        single black goblet. Everything seems to be made of this strange shimmering black material. You sit down. You look
+        into the goblet and find a liquid that might be white milk. You give it a swirl and see that the liquid is very
+        runny: closer in consistency to water. Do you DRINK it or EXPLORE the forest further?"
       actions:
         drink:
           - say: >
-		      "You put the white fluid to your lips and drink, deeply. It tastes so smokey. Its whiteness starts to remind 
-			  you less of milk and more of the exhaust from factory chimneys. It’s cold on your lips but it makes you feel 
-			  warm inside. It’s pleasant but so strange. You drink it all. You move to place the goblet back on the table. 
-			  Things feel different. Your hand is moving so slowly. It’s as if the air has become thick and your movement 
-			  through it is like dragging your arm through mud. You’re almost frozen. You command your muscles to move more 
-			  quickly but nothing happens: your arm inches towards the table as if it can hardly move at all. Not good."
+              "You put the white fluid to your lips and drink, deeply. It tastes so smokey. Its whiteness starts to remind
+              you less of milk and more of the exhaust from factory chimneys. It's cold on your lips but it makes you feel
+              warm inside. It's pleasant but so strange. You drink it all. You move to place the goblet back on the table.
+              Things feel different. Your hand is moving so slowly. It's as if the air has become thick and your movement
+              through it is like dragging your arm through mud. You're almost frozen. You command your muscles to move more
+              quickly but nothing happens: your arm inches towards the table as if it can hardly move at all. Not good."
           - goto: 3.1-drink
-		    delay: 15m
-		explore:
-		  - say: >
-		    Your hand carries the goblet back towards the table, you put it down and let go. But the table does not seem to 
-			stop the goblet’s fall. Instead the goblet’s base begins to flow into the table itself. It’s sinking. You reach 
-			out to grab the goblet but it’s soft now and the side of the goblet coats your hand in its thick black goo. 
-			Then the black ooze drips down off your hand onto the table itself. You pull back. The white liquid spills out 
-			of the goblet through the hole your fingers just made. When it touches the table, the white vanishes and all you 
-			see is a small black ripple spread out across the table from the point where the stream made contact. You’re 
-			scared. You push back away from the table and get up and practically run towards the woods. You don’t know what 
-			this place is, but you don’t like. You’re going to get as far away as possible.
-		  - goto: 3.2-leave-table
-		    delay: 6h
+            delay: 15m
+        explore:
+          - say: >
+              Your hand carries the goblet back towards the table, you put it down and let go. But the table does not seem to
+              stop the goblet's fall. Instead the goblet's base begins to flow into the table itself. It's sinking. You reach
+              out to grab the goblet but it's soft now and the side of the goblet coats your hand in its thick black goo.
+              Then the black ooze drips down off your hand onto the table itself. You pull back. The white liquid spills out
+              of the goblet through the hole your fingers just made. When it touches the table, the white vanishes and all you
+              see is a small black ripple spread out across the table from the point where the stream made contact. You're
+              scared. You push back away from the table and get up and practically run towards the woods. You don't know what
+              this place is, but you don't like. You're going to get as far away as possible.
+          - goto: 3.2-leave-table
+            delay: 6h
   - 3.1-drink:
-      description: >
-	    "You put the white fluid to your lips and drink, deeply. It tastes so smokey. Its whiteness starts to remind you less 
-		of milk and more of the exhaust from factory chimneys. It’s cold on your lips but it makes you feel warm inside. It’s 
-		pleasant but so strange. You drink it all. You move to place the goblet back on the table. Things feel different. Your 
-		hand is moving so slowly. It’s as if the air has become thick and your movement through it is like dragging your arm 
-		through mud. You’re almost frozen. You command your muscles to move more quickly but nothing happens: your arm inches 
-		towards the table as if it can hardly move at all. Not good."
-		delay: 15m
-		(TODO: Fill in drinking time slowing liquid)
+      enter: >
+        "You put the white fluid to your lips and drink, deeply. It tastes so smokey. Its whiteness starts to remind you less
+        of milk and more of the exhaust from factory chimneys. It's cold on your lips but it makes you feel warm inside. It's
+        pleasant but so strange. You drink it all. You move to place the goblet back on the table. Things feel different. Your
+        hand is moving so slowly. It's as if the air has become thick and your movement through it is like dragging your arm
+        through mud. You're almost frozen. You command your muscles to move more quickly but nothing happens: your arm inches
+        towards the table as if it can hardly move at all. Not good."
   - 4.0-door:
-      description: >
-	    You put your hand against the door and push. The black wood is surprisingly soft to your touch. It’s very bright 
-		outside and it takes your eyes just a moment to adjust. 
-		delay: 1m
-		The house is in a clearing in the middle of a forest of tall dark trees. They look like ebonies but darker still. 
-		There are sounds all around you, but not what’d you’d expect in a forest. Though there is a soft breeze, there 
-		is no rustling of leaves from the trees. Instead there is the faintest tinkling sound coming from the woods ahead. 
-		You decide to investigate.
-		delay: 12h
-		You’ve been wandering through the trees for many hours now, following the treble notes playing off the breeze. The 
-		sun is still shining brightly but the shade of the great trees has kept you cool and feeling fresh. The sounds are 
-		so loud, but you welcome them. They form a boisterous hamory;a choir of perfect voices forever singing a wordless 
-		song. You crest the final hill and look below. In the distance you see a lake alight with glimmering sunshine. A 
-		mile or so ahead is a grove of seven great trees that seems to be the source of the symphonic sounds. You walk on 
-		to learn their nature.
-		delay: 1h
-		You step under the canopy of the seven great trees and look up to see magnificent silver chimes hanging from each 
-		one. The chimes are just a bit wider than you are tall and their lengths vary considerably from the shortest, 
-		only a dozen or so feet long, to the greatest of the chimes which runs almost the whole height of the tallest treat 
-		and more than anything resembles a perfectly polished shining smoke stack. The wind is barely blowing now and you 
-		wonder how any force could move such massive instruments. You can WAIT here to watch them make their music or 
-		WANDER through the forest towards the lake.
+      enter:
+        - say: >
+            You put your hand against the door and push. The black wood is surprisingly soft to your touch. It's very bright
+            outside and it takes your eyes just a moment to adjust.
+          delay: 1m
+        - say: >
+            The house is in a clearing in the middle of a forest of tall dark trees. They look like ebonies but darker still.
+            There are sounds all around you, but not what'd you'd expect in a forest. Though there is a soft breeze, there
+            is no rustling of leaves from the trees. Instead there is the faintest tinkling sound coming from the woods ahead.
+            You decide to investigate.
+          delay: 12h
+        - say: >
+            You've been wandering through the trees for many hours now, following the treble notes playing off the breeze. The
+            sun is still shining brightly but the shade of the great trees has kept you cool and feeling fresh. The sounds are
+            so loud, but you welcome them. They form a boisterous hamory;a choir of perfect voices forever singing a wordless
+            song. You crest the final hill and look below. In the distance you see a lake alight with glimmering sunshine. A
+            mile or so ahead is a grove of seven great trees that seems to be the source of the symphonic sounds. You walk on
+            to learn their nature.
+        - say: >
+            You step under the canopy of the seven great trees and look up to see magnificent silver chimes hanging from each
+            one. The chimes are just a bit wider than you are tall and their lengths vary considerably from the shortest,
+            only a dozen or so feet long, to the greatest of the chimes which runs almost the whole height of the tallest treat
+            and more than anything resembles a perfectly polished shining smoke stack. The wind is barely blowing now and you
+            wonder how any force could move such massive instruments. You can WAIT here to watch them make their music or
+            WANDER through the forest towards the lake.
+          delay: 1h
       actions:
         wait:
           - say: >
-		      You lie on your back on the soft grass, looking up at the dark trees, the sea-blue sky and the silver chimes. 
-			  You watch.
+              You lie on your back on the soft grass, looking up at the dark trees, the sea-blue sky and the silver chimes.
+              You watch.
           - goto: 4.1-chimes
-		    delay: 15m
-		wander:
-		  - say: >
-		    You walk down to the lakeshore and find a sandy seat beside the lapping water. You take off a shoe and touch your 
-			toes against the water. It’s warm and cool. 
-		  - goto: 5.0-lake
-		    delay: 12h
+            delay: 15m
+        wander:
+          - say: >
+              You walk down to the lakeshore and find a sandy seat beside the lapping water. You take off a shoe and touch your
+              toes against the water. It's warm and cool.
+          - goto: 5.0-lake
+            delay: 12h
   - 4.1-chimes:
-      description: >
-	    "It’s happened four times now: the smallest chime mysteriously clanging anew. With each fresh ring you can clearly see 
-		the chime shaking as if just struck, hard. But you haven’t made out what strange force is causing each new knell. That 
-		chime is hundreds of feet above you. It’s too small. The biggest of the chimes is just ten or so feet above your head 
-		and it’s vibrations have slowed visibly since you first laid down. You fix your eyes on it to see if you can catch it 
-		toll."
-		delay: 15m
-		"You can’t see the great chime moving anymore but you can still hear its sound. Faintly. The pitch seems to be getting 
-		lower as the chime’s sound fades. The big chime is almost silent now; mostly masked by the higher notes of the other chimes."
-		delay: 2m
-		"You move underneath the big chime to get as close as possible and then you notice something new. There’s a thick black 
-		liquid sliding down the inner circumference of the chime. It’s very viscous and moving evenly. Almost the entire inside of 
-		the chime is black now from this slow seeping stream. You understand: the ooze covering the inner wall of the chime must be 
-		what’s causing the sound itself to change."
-		delay: 3m
-		"The sound in the great chime is very low now and the pitch black substance is almost at its bottom—about to flow out and 
-		drip onto the ground. Onto you. But right as the liquid touches the lower lip of the chime something happens. The chime’s 
-		sound has formed a strange resonance with the black liquid. You see small waves from far above moving down the substance. 
-		There’s a foot or so between each crest. The first wave hits the bottom edge of the chime and bounces back, traveling up. 
-		As wave hits wave the interference pattern becomes more and more intricate. The sound is becoming louder and much deeper. 
-		The waves are taller than they were. They’re moving fast."
-		delay: 2m
-		The ripples are so dense now that you can hardly see the peaks and troughs of each wave. The sound has become a heavy booming hum. 
-		delay: 1m
-		The strange liquid seems almost flat again, save for the subtle rapid vibrations along its surface. The chime hits a final booming 
-		bass note and suddenly, with incredibly speed, the liquid shoots up the inner wall. It’s defying gravity, retreating with the 
-		viscosity of water being poured along smooth glass. You lose sight of the black substance as it races towards the top of the great 
-		chime. The briefest moment passes and then entire chime shakes loudly. The note it plays isn’t low at all, it’s high and crisp 
-		and magnificent. There’s no sign of the liquid now, but you imagine it must be pooled hundreds of feet above you, once again 
-		beginning its descent down the great chime.
-		delay: 2h
-		"You’ve been listening and watching the chimes for many hours now. You’ve seen their symbiosis with the black ooze. You’ve watched 
-		its flow, its building waves, its sudden retreat —the full cycle—play out twice more inside of two of the lesser chimes. Yet, you 
-		are no closer to fathoming what strange magic could be animating this endless symphony. The chime grove has taught you all it will 
-		teach. You can continue making your way towards the LAKE or turn back and find a new path through the FOREST."
+      enter:
+        - say: >
+            "It's happened four times now: the smallest chime mysteriously clanging anew. With each fresh ring you can clearly see
+            the chime shaking as if just struck, hard. But you haven't made out what strange force is causing each new knell. That
+            chime is hundreds of feet above you. It's too small. The biggest of the chimes is just ten or so feet above your head
+            and it's vibrations have slowed visibly since you first laid down. You fix your eyes on it to see if you can catch it
+            toll."
+          delay: 15m
+        - say: >
+            "You can't see the great chime moving anymore but you can still hear its sound. Faintly. The pitch seems to be getting
+            lower as the chime's sound fades. The big chime is almost silent now; mostly masked by the higher notes of the other chimes."
+          delay: 2m
+        - say: >
+            "You move underneath the big chime to get as close as possible and then you notice something new. There's a thick black
+            liquid sliding down the inner circumference of the chime. It's very viscous and moving evenly. Almost the entire inside of
+            the chime is black now from this slow seeping stream. You understand: the ooze covering the inner wall of the chime must be
+            what's causing the sound itself to change."
+          delay: 3m
+        - say: >
+            "The sound in the great chime is very low now and the pitch black substance is almost at its bottom-about to flow out and
+            drip onto the ground. Onto you. But right as the liquid touches the lower lip of the chime something happens. The chime's
+            sound has formed a strange resonance with the black liquid. You see small waves from far above moving down the substance.
+            There's a foot or so between each crest. The first wave hits the bottom edge of the chime and bounces back, traveling up.
+            As wave hits wave the interference pattern becomes more and more intricate. The sound is becoming louder and much deeper.
+            The waves are taller than they were. They're moving fast."
+          delay: 2m
+        - say: >
+            The ripples are so dense now that you can hardly see the peaks and troughs of each wave. The sound has become a heavy booming hum.
+          delay: 1m
+        - say: >
+            The strange liquid seems almost flat again, save for the subtle rapid vibrations along its surface. The chime hits a final booming
+            bass note and suddenly, with incredibly speed, the liquid shoots up the inner wall. It's defying gravity, retreating with the
+            viscosity of water being poured along smooth glass. You lose sight of the black substance as it races towards the top of the great
+            chime. The briefest moment passes and then entire chime shakes loudly. The note it plays isn't low at all, it's high and crisp
+            and magnificent. There's no sign of the liquid now, but you imagine it must be pooled hundreds of feet above you, once again
+            beginning its descent down the great chime.
+          delay: 2h
+        - say: >
+            "You've been listening and watching the chimes for many hours now. You've seen their symbiosis with the black ooze. You've watched
+            its flow, its building waves, its sudden retreat -the full cycle-play out twice more inside of two of the lesser chimes. Yet, you
+            are no closer to fathoming what strange magic could be animating this endless symphony. The chime grove has taught you all it will
+            teach. You can continue making your way towards the LAKE or turn back and find a new path through the FOREST."
       actions:
         lake:
           - say: >
-		      You trek onwards. You can’t help but look back towards the seven trees hiding away the magic of those seven chimes. You’re 
-			  tired. You hope the water will be warm enough to take a swim.
+              You trek onwards. You can't help but look back towards the seven trees
+              hiding away the magic of those seven chimes. You're tired. You hope the water
+              will be warm enough to take a swim.
           - goto: 5.0-lake
-		    delay: 15m
-		forest:
-		  - say: >
-		    You head back into the forest. The trees look unnaturally black and you can’t help but wonder if that strange ooze has done 
-			something to them as well. The forest seems endless but you continue on all the same.
-			delay: 24h
-			"You’re very lost now. Unsure where to go or even how to find your way back to where you’ve been. But then far up ahead you 
-			see a clearing in the woods."
-			delay: 10m
-			You’re almost at the clearing now and you can see that there’s something at its center. You walk on.
-		  - goto: 3.0-table
-		    delay: 10m
+            delay: 15m
+        forest:
+          - say: >
+              You head back into the forest. The trees look unnaturally black and you can't help but wonder if that strange ooze has done
+              something to them as well. The forest seems endless but you continue on all the same.
+            delay: 24h
+          - say: >
+              "You're very lost now. Unsure where to go or even how to find your way back to where you've been. But then far up ahead you
+              see a clearing in the woods."
+            delay: 10m
+          - say: >
+              You're almost at the clearing now and you can see that there's something at its center. You walk on.
+          - goto: 3.0-table
+            delay: 10m

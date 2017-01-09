@@ -122,6 +122,7 @@ class Dispatcher(object):
 class Graph(object):
     def __init__(self):
         self.nodes = {}
+        self.locations = []
         self.start_node = None
 
     def register(self, node):
@@ -135,6 +136,7 @@ class Graph(object):
       for i, location_dict in enumerate(script['locations']):
         for location_spec in location_dict.items():
           location = parse_location(location_spec)
+          self.locations.append(location)
           nodes = location.to_nodes()
           map(self.register, nodes)
 
@@ -166,6 +168,35 @@ class Node(object):
         logging.info("Say: %s", message)
 
 
+class Effect(object):
+  def __repr__(self):
+    return self.__class__.__name__
+
+
+class Say(Effect):
+  def __repr__(self):
+    return "Say(%s)" % self.message
+
+  def __init__(self, message, delay):
+    self.message = message
+    self.delay = delay
+
+
+class Go(Effect):
+  def __init__(self, to_location, delay):
+    self.to_location = to_location
+    self.delay = delay
+
+
+class Action(object):
+  def __repr__(self):
+    return "%s - %s" % (self.tag, self.effects)
+
+  def __init__(self, tag, effect_list):
+    self.tag = tag
+    self.effects = effect_list
+
+
 class HelpNode(Node):
   def __init__(self):
     self.name = "help"
@@ -175,48 +206,90 @@ class HelpNode(Node):
     return GoBack()
 
 
-class EnterNode(Node):
-    def __init__(self, location):
-        self.name = location.tag + "_enter"
-        self.location = location
+class EffectNode(Node):
+  def __repr__(self):
+    return "%s:%s:%s" % (self.name, self.effect, self.next_node.name if self.next_node else None)
 
-    def handle(self, state, message):
-        self.send(self.location.description)
-        return GetMessage(self.location.choice_node.name)
+
+  def __init__(self, name, effect, next_node, choice_node_next=False):
+    self.name = name
+    self.effect = effect
+    self.next_node = next_node
+    self.choice_node_next = choice_node_next
+
+  def handle(self, state, message):
+      effect = self.effect
+      if isinstance(effect, Say):
+        self.send(effect.message)
+        if not self.next_node:
+          logging.error(self.name)
+        if self.choice_node_next:
+          return GetMessage(self.next_node.name)
+        else:
+          return GoTo(self.next_node.name)
+      if isinstance(effect, Go):
+        return GoTo(effect.to_location + "_enter_1")
 
 
 class ChoiceNode(Node):
-    def __init__(self, location):
+    def __init__(self, location, effect_chains):
         self.name = location.tag + "_choice"
-        self.location = location
+        self.effect_chains = effect_chains
 
     def handle(self, state, message):
-        effects = self.location.actions.get(message.lower())
+        effects = self.effect_chains.get(message.lower())
         if not effects:
           self.send("I didn't understand that.")
-          self.send("You can say: %s" % ", ".join(self.location.actions.keys()))
+          self.send("You can say: %s" % ", ".join(self.effect_chains.keys()))
           return GetMessage(self.name)
+        return GoTo(effects[0].name)
 
-        for effect in effects:
-          for effect_type, body in effect.items():
-            if effect_type == "say":
-              self.send(body)
-            elif effect_type == "goto":
-              return GoTo(body + "_enter")
-            elif effect_type == "help":
-              return GoTo("help")
-
-        self.send(choice[0])
-        return choice[1]
 
 class Player(BaseModel):
     pass
+
+
+class InvalidSpec(Exception):
+  pass
+
+
+def parse_effect_list(effect_spec_list):
+  if isinstance(effect_spec_list, basestring):
+    return [Say(effect_spec_list, None)]
+  if not isinstance(effect_spec_list, list):
+    raise InvalidSpec("Expected a list; got %s" % effect_spec_list)
+  return map(parse_effect, effect_spec_list)
+
+
+def parse_effect(effect_spec):
+  """ parse an effect """
+  delay = None
+  if "delay" in effect_spec:
+    delay = effect_spec.pop("delay")
+
+  key = effect_spec.keys()[0]
+  val = effect_spec.values()[0]
+  if key == "say":
+    return Say(val, delay)
+  elif key == "goto":
+    return Go(val, delay)
+
+
+def parse_actions(actions_spec):
+  if not actions_spec:
+    return []
+  actions = []
+  for key, val in actions_spec.items():
+    actions.append(Action(key, parse_effect_list(val)))
+  return actions
+
 
 def parse_location(location_spec):
   """ Parse a location from yaml
   expects a tuple ('tag', props)
   room_one:
-    description: "there is a DOOR"
+    enter:
+      - say: "there is a DOOR"
     actions:
       door:
         - say: "you open the door"
@@ -224,28 +297,67 @@ def parse_location(location_spec):
   """
   location_tag = location_spec[0]
   properties = location_spec[1]
-  return Location(location_tag, **properties)
+  enter = parse_effect_list(properties['enter'])
+  actions = parse_actions(properties.get('actions', None))
+  return Location(location_tag, enter=enter, actions=actions)
 
+
+class HelpAction(Action):
+  def __init__(self):
+    self.tag = "help"
+    self.effects = [Go("help", None)]
 
 
 default_actions = {
-  "help": [{"help": ""}]
+  "help": HelpAction()
 }
 
+
+def make_effect_nodes(effect_list, prefix=None):
+  prev_node = None
+  nodes = []
+  total = len(effect_list)
+  for i, effect in enumerate(reversed(effect_list)):
+    name = "%s_%s" % (prefix, (total - i))
+    if prev_node:
+      node = EffectNode(name, effect, next_node=prev_node)
+    else:
+      node = EffectNode(name, effect, None)
+    nodes.append(node)
+    prev_node = node
+  return list(reversed(nodes))
+
+
 class Location(object):
-    def __init__(self, tag, description=None, actions=None):
+    def __repr__(self):
+      return "Location(%s, enter: %s, actions: %s)" % (self.tag, self.enter, self.actions)
+
+    def __init__(self, tag, enter=None, actions=None):
         self.tag = tag
-        self.description = description
-        self.actions = actions
+        self.enter = enter
+        self.actions = {a.tag: a for a in actions}
         self.actions.update(default_actions)
 
     def go(self):
         return GoTo(self.enter_node)
 
     def to_nodes(self):
-        self.choice_node = ChoiceNode(self)
-        self.enter_node = EnterNode(self)
-        return [self.enter_node, self.choice_node]
+        nodes = [None]
+        action_chains = {}
+        for action in self.actions.values():
+            effect_nodes = make_effect_nodes(action.effects, prefix="%s_%s" % (self.tag, action.tag))
+            nodes += effect_nodes
+            action_chains[action.tag] = effect_nodes
+        choice_node = ChoiceNode(self, action_chains)
+        nodes.append(choice_node)
+
+        enter_effect_nodes = make_effect_nodes(self.enter, prefix="%s_enter" %(self.tag))
+        enter_effect_nodes[-1].next_node = choice_node
+        enter_effect_nodes[-1].choice_node_next = True
+
+        enter_node = enter_effect_nodes[0]
+        nodes[0] = enter_node
+        return nodes
 
 
 world = Graph()

@@ -1,1 +1,1 @@
-from handler import world, Dispatcher, User, Visit
+from handler import world, Dispatcher, User, Visit, script

@@ -29,8 +29,7 @@ locations:
               The stag sees you moving and turns to run. He races out the other side of the
               bed and bolts towards a table in the corner of the room. As he gets closer his
               light reveals a small tunnel underneath the table. He darts inside. You get back
-              on your hands and knees and follow him inside. After a struggle, you manage to pull
-              the door open. Whew.
+              on your hands and knees and follow him inside.
           - goto: 2.0-crawl
             delay: 12h
         reach:

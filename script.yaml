@@ -49,13 +49,13 @@ locations:
       actions:
         crawl:
           - say: >
-              "As you get closer, you see that the crawlspace is a tunnel barely wide enough for
+              As you get closer, you see that the crawlspace is a tunnel barely wide enough for
               you to fit inside. Just a few feet into the tunnel, there is the strangest thing:
               a small stag that's no bigger than a housecat. His fur is pure white and it glows softly,
               lighting up the dark space. His little antlers look delicate enough to snap between two
               fingers. He sees you and holds your gaze for just a moment before turning around and
               running down the tunnel ahead. In this tight space, he's much faster than you are but you
-              crawl on after him just the same."
+              crawl on after him just the same.
           - goto: 2.0-crawl
             delay: 12h
         door:
@@ -111,17 +111,17 @@ locations:
       actions:
         sleep:
           - say: >
-              "You roll onto your back, arms at your sides enclosed by this hellish tunnel. The hard floor of
+              You roll onto your back, arms at your sides enclosed by this hellish tunnel. The hard floor of
               the tunnel isn't much of a bed. You're frightened, alone; but tired enough that sleep comes
               quickly all the same. Your dreams are awash with vibrant colors -- forests of crocodile green and
-              skies of textured blue."
+              skies of textured blue.
             delay: 8h
           - say: >
-             "You wake and know there's something wrong. Your body is sinking into the tunnel floor. It no
+             You wake and know there's something wrong. Your body is sinking into the tunnel floor. It no
              longer feels like rough rock but rather some thick, sinister ooze. Still on your back, you feel
              around to find that all the walls of tunnel are flowing down. You press your hand into the ceiling
              above you. It gives easily: enveloping your fingers and the top of your palm. You pull your hand
-             back and some of the ooze is pulled with it, dripping down and around your arm."
+             back and some of the ooze is pulled with it, dripping down and around your arm.
             delay: 1m
           - say: >
               Your body is half submerged now. You manage to roll onto your belly and try to continue a desperate
@@ -130,14 +130,14 @@ locations:
               running out of space to breath.
             delay: 2m
           - say: >
-              "Your neck is crooked sideways, taking in the last slivers of air in the now liquified space that
+              Your neck is crooked sideways, taking in the last slivers of air in the now liquified space that
               was this tunnel. Your whole body is submerged now. The ooze is warm and thick. It rises past your
               neck and begins to cover the right side of your face. You stretch for air. It flows into your right
               ear and in the ooze you hear a low murmur like dozens of tiny voices: muffled and distant. You close
               your eyes, replacing one absolute darkness with another. It advances up over your face, covering your
               mouth and rising up your nostrils. There's no air left. No space. You let out your last breath as
               muffled scream. The sound of distant voices seems to pause for the briefest moment before resuming
-              its chatter. The darkness is timeless."
+              its chatter. The darkness is timeless.
           - goto: end
             delay: 1m
         forward:
@@ -153,12 +153,12 @@ locations:
       actions:
         drink:
           - say: >
-              "You put the white fluid to your lips and drink, deeply. It tastes so smokey. Its whiteness starts to remind
+              You put the white fluid to your lips and drink, deeply. It tastes so smokey. Its whiteness starts to remind
               you less of milk and more of the exhaust from factory chimneys. It's cold on your lips but it makes you feel
               warm inside. It's pleasant but so strange. You drink it all. You move to place the goblet back on the table.
               Things feel different. Your hand is moving so slowly. It's as if the air has become thick and your movement
               through it is like dragging your arm through mud. You're almost frozen. You command your muscles to move more
-              quickly but nothing happens: your arm inches towards the table as if it can hardly move at all. Not good."
+              quickly but nothing happens: your arm inches towards the table as if it can hardly move at all. Not good.
           - goto: 3.1-drink
             delay: 15m
         explore:
@@ -175,12 +175,12 @@ locations:
             delay: 6h
   - 3.1-drink:
       enter: >
-        "You put the white fluid to your lips and drink, deeply. It tastes so smokey. Its whiteness starts to remind you less
+        You put the white fluid to your lips and drink, deeply. It tastes so smokey. Its whiteness starts to remind you less
         of milk and more of the exhaust from factory chimneys. It's cold on your lips but it makes you feel warm inside. It's
         pleasant but so strange. You drink it all. You move to place the goblet back on the table. Things feel different. Your
         hand is moving so slowly. It's as if the air has become thick and your movement through it is like dragging your arm
         through mud. You're almost frozen. You command your muscles to move more quickly but nothing happens: your arm inches
-        towards the table as if it can hardly move at all. Not good."
+        towards the table as if it can hardly move at all. Not good.
   - 4.0-door:
       enter:
         - say: >
@@ -224,29 +224,29 @@ locations:
   - 4.1-chimes:
       enter:
         - say: >
-            "It's happened four times now: the smallest chime mysteriously clanging anew. With each fresh ring you can clearly see
+            It's happened four times now: the smallest chime mysteriously clanging anew. With each fresh ring you can clearly see
             the chime shaking as if just struck, hard. But you haven't made out what strange force is causing each new knell. That
             chime is hundreds of feet above you. It's too small. The biggest of the chimes is just ten or so feet above your head
             and it's vibrations have slowed visibly since you first laid down. You fix your eyes on it to see if you can catch it
-            toll."
+            toll.
           delay: 15m
         - say: >
             "You can't see the great chime moving anymore but you can still hear its sound. Faintly. The pitch seems to be getting
             lower as the chime's sound fades. The big chime is almost silent now; mostly masked by the higher notes of the other chimes."
           delay: 2m
         - say: >
-            "You move underneath the big chime to get as close as possible and then you notice something new. There's a thick black
+            You move underneath the big chime to get as close as possible and then you notice something new. There's a thick black
             liquid sliding down the inner circumference of the chime. It's very viscous and moving evenly. Almost the entire inside of
             the chime is black now from this slow seeping stream. You understand: the ooze covering the inner wall of the chime must be
-            what's causing the sound itself to change."
+            what's causing the sound itself to change.
           delay: 3m
         - say: >
-            "The sound in the great chime is very low now and the pitch black substance is almost at its bottom-about to flow out and
+            The sound in the great chime is very low now and the pitch black substance is almost at its bottom-about to flow out and
             drip onto the ground. Onto you. But right as the liquid touches the lower lip of the chime something happens. The chime's
             sound has formed a strange resonance with the black liquid. You see small waves from far above moving down the substance.
             There's a foot or so between each crest. The first wave hits the bottom edge of the chime and bounces back, traveling up.
             As wave hits wave the interference pattern becomes more and more intricate. The sound is becoming louder and much deeper.
-            The waves are taller than they were. They're moving fast."
+            The waves are taller than they were. They're moving fast.
           delay: 2m
         - say: >
             The ripples are so dense now that you can hardly see the peaks and troughs of each wave. The sound has become a heavy booming hum.
@@ -260,10 +260,10 @@ locations:
             beginning its descent down the great chime.
           delay: 2h
         - say: >
-            "You've been listening and watching the chimes for many hours now. You've seen their symbiosis with the black ooze. You've watched
+            You've been listening and watching the chimes for many hours now. You've seen their symbiosis with the black ooze. You've watched
             its flow, its building waves, its sudden retreat -the full cycle-play out twice more inside of two of the lesser chimes. Yet, you
             are no closer to fathoming what strange magic could be animating this endless symphony. The chime grove has taught you all it will
-            teach. You can continue making your way towards the LAKE or turn back and find a new path through the FOREST."
+            teach. You can continue making your way towards the LAKE or turn back and find a new path through the FOREST.
       actions:
         lake:
           - say: >
@@ -278,8 +278,8 @@ locations:
               something to them as well. The forest seems endless but you continue on all the same.
             delay: 24h
           - say: >
-              "You're very lost now. Unsure where to go or even how to find your way back to where you've been. But then far up ahead you
-              see a clearing in the woods."
+              You're very lost now. Unsure where to go or even how to find your way back to where you've been. But then far up ahead you
+              see a clearing in the woods.
             delay: 10m
           - say: >
               You're almost at the clearing now and you can see that there's something at its center. You walk on.

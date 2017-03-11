@@ -2,6 +2,7 @@ import webapp2
 from google.appengine.ext import ndb
 import logging
 import yaml
+import datetime
 
 # Node transitions
 class Transition(object):
@@ -60,6 +61,8 @@ class Visit(BaseModel):
     messages = ndb.KeyProperty(kind=Message, repeated=True)
     application_state = ndb.KeyProperty()
     next_node = ndb.StringProperty()
+    sleep_until = ndb.DateTimeProperty()
+    transition_executed = ndb.BooleanProperty()
 
 
 class Dispatcher(object):
@@ -79,6 +82,11 @@ class Dispatcher(object):
           prev_visit = None
 
         if prev_visit and prev_visit.next_node:
+            if prev_visit.sleep_until and prev_visit.sleep_until > datetime.datetime.now():
+              return session
+            else:
+              prev_visit.transition_executed = True
+
             logging.info("found prev_visit %s", prev_visit.key.id())
 
             try:
@@ -101,7 +109,7 @@ class Dispatcher(object):
             node = self.graph.start_node
             prev_app_state = None
 
-        curr_visit = Visit(user=user.key, parent=user.key)
+        curr_visit = Visit(user=user.key, parent=user.key, transition_executed=False)
         curr_visit.put()
         logging.info("Visiting %s with %s", node.name, message)
 
@@ -167,6 +175,23 @@ class Node(object):
         self.current_session.append(msg)
         logging.info("Say: %s", message)
 
+    def delay(self, delay_spec):
+        if not delay_spec:
+            return
+        now = datetime.datetime.now()
+        number, unit = int(delay_spec[:-1]), delay_spec[-1:]
+        if unit == "h":
+          multiple = 60 * 24
+        elif unit == "m":
+          multiple = 60
+        elif unit == "s":
+          multiple = 1
+        else:
+          logging.error("INVALID SPEC")
+        multiple = 1
+        sleep_until = now + datetime.timedelta(seconds=number * multiple)
+        self.current_visit.sleep_until = sleep_until
+
 
 class Effect(object):
   def __repr__(self):
@@ -219,6 +244,7 @@ class EffectNode(Node):
 
   def handle(self, state, message):
       effect = self.effect
+      self.delay(effect.delay)
       if isinstance(effect, Say):
         self.send(effect.message)
         if not self.next_node:

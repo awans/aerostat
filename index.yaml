@@ -12,6 +12,11 @@ indexes:
 
 - kind: Visit
   properties:
+  - name: transition_executed
+  - name: sleep_until
+
+- kind: Visit
+  properties:
   - name: user
   - name: created_at
     direction: desc
@@ -26,6 +31,12 @@ indexes:
   - name: user_phone_number
   - name: created_at
     direction: desc
+
+- kind: Visit
+  ancestor: yes
+  properties:
+  - name: user
+  - name: created_at
 
 - kind: Visit
   ancestor: yes

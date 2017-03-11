@@ -5,8 +5,12 @@
   <h1>Pitch</h1>
 
   <h2>Conversation to date</h2>
-  {% for message in messages %}
-  <div>{{ message.body }}</div>
+  {% for visit in visits %}
+    <div> {{ visit.current_node }}
+          {% for message in visit.messages %}
+          <div>{{ message.body }}</div>
+          {% endfor %} - sleep until: {{ visit.sleep_until }}
+  </div>
   {% endfor %}
   <form action="/message" method="POST">
     <div>

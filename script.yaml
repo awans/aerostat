@@ -15,7 +15,7 @@ locations:
           - say: >
               The darkness envelopes you once more. It hums, warmly.
           - goto: 1.2-sleep
-            delay: 12h
+            delay: 30s
   - 1.1-investigate:
       enter: >
         On your hands and knees, you look under the bed to find a stag as small as a housecat.
@@ -50,13 +50,13 @@ locations:
       actions:
         crawl:
           - say: >
-              "As you get closer, you see that the crawlspace is a tunnel barely wide enough for
+              As you get closer, you see that the crawlspace is a tunnel barely wide enough for
               you to fit inside. Just a few feet into the tunnel, there is the strangest thing:
               a small stag that's no bigger than a housecat. His fur is pure white and it glows softly,
               lighting up the dark space. His little antlers look delicate enough to snap between two
               fingers. He sees you and holds your gaze for just a moment before turning around and
               running down the tunnel ahead. In this tight space, he's much faster than you are but you
-              crawl on after him just the same."
+              crawl on after him just the same.
           - goto: 2.0-crawl
             delay: 12h
         door:

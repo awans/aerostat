@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head></head>
+
+<body>
+    <h1>Pitch</h1>
+    <a href="/admin">&larr; Back</a>
+
+    <h2>Conversation to date with {{ user.phone_number }}</h2> 
+
+    {% for visit in visits %}
+    <div> {{ visit.current_node }} {% for message in visit.messages %}
+        <div>{{ message.body }}</div>
+        {% endfor %} - sleep until: {{ visit.sleep_until }}
+    </div>
+    {% endfor %}
+    <form action="/message" method="POST">
+        <input type="hidden" name="phone_number" value="{{ user.phone_number }}"/>
+        <div>
+            <label>Message:
+                <input type="text" name="content"/>
+            </label>
+        </div>
+        <button>Send</button>
+    </form>
+    <form action="/reset" method="POST">
+        <div>
+            <label>Reset number:
+        <input type="hidden" name="phone_number" value="{{ user.phone_number }}"/>
+      </label>
+            <button>Reset</button>
+        </div>
+    </form>
+</body>
+
+</html>

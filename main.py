@@ -17,6 +17,7 @@ dispatcher = pitch.Dispatcher(pitch.world)
 config = ConfigParser.ConfigParser()
 config.readfp(open('creds.ini'))
 
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         tw = str(twiml.Response())
@@ -34,25 +35,40 @@ class ValidateHandler(WebBase):
     self.response.out.write("<pre>" + pprint.pformat(pitch.world.nodes) + "</pre>")
 
 
+class UserHandler(WebBase):
+  def get(self, phone_number):
+    user = pitch.User.query().filter(pitch.User.phone_number == phone_number).get()
+    if user:
+      visits = pitch.Visit.query(ancestor=user.key).filter(pitch.Visit.user == user.key).order(pitch.Visit.created_at)
+    else:
+      visits = []
+    if not user:
+      return
+
+    template_values = {
+      "user": {
+        "phone_number": user.phone_number,
+      },
+      "visits": [{
+        "current_node": visit.current_node,
+        "next_node": visit.next_node,
+        "sleep_until": visit.sleep_until,
+        "transition_executed": visit.transition_executed,
+        "messages": ndb.get_multi(visit.messages)}
+        for visit in visits]
+    }
+    path = os.path.join(os.path.dirname(__file__), 'templates/user.html')
+    self.response.out.write(template.render(path, template_values))
+
+
 class AdminHandler(WebBase):
     def get(self):
-        user = pitch.User.query().filter(pitch.User.phone_number == "7037919267").get()
-        if user:
-          visits = pitch.Visit.query(ancestor=user.key).filter(pitch.Visit.user == user.key).order(pitch.Visit.created_at)
-        else:
-          visits = []
-
-        template_values = {
-          "visits": [{
-            "current_node": visit.current_node,
-            "next_node": visit.next_node,
-            "sleep_until": visit.sleep_until,
-            "transition_executed": visit.transition_executed,
-            "messages": ndb.get_multi(visit.messages)}
-            for visit in visits]
-        }
-        path = os.path.join(os.path.dirname(__file__), 'templates/main.html')
-        self.response.out.write(template.render(path, template_values))
+      users = pitch.User.query().fetch(1000)
+      template_values = {
+        "users": [{"phone_number": user.phone_number} for user in users]
+      }
+      path = os.path.join(os.path.dirname(__file__), 'templates/admin.html')
+      self.response.out.write(template.render(path, template_values))
 
 
 class MessageHandler(webapp2.RequestHandler):
@@ -66,7 +82,7 @@ class MessageHandler(webapp2.RequestHandler):
     tw = str(twiml.Response())
     self.response.content_type = 'application/xml'
     self.response.write(tw)
-    self.redirect('/admin')
+    self.redirect(self.request.referrer)
 
 
 class TwilioHandler(webapp2.RequestHandler):
@@ -87,6 +103,7 @@ class TwilioHandler(webapp2.RequestHandler):
     self.response.content_type = 'application/xml'
     self.response.write(str(resp))
 
+
 class ResetHandler(webapp2.RequestHandler):
   def post(self):
     phone_number = self.request.get('phone_number')
@@ -97,6 +114,7 @@ class ResetHandler(webapp2.RequestHandler):
     keys.append(user.key)
     ndb.delete_multi(keys)
     self.redirect('/admin')
+
 
 class CronHandler(webapp2.RequestHandler):
   def get(self):
@@ -124,6 +142,24 @@ class CronHandler(webapp2.RequestHandler):
       logging.info("Cron said %s to %s with %s", message, user, resp)
 
 
+class IntroHandler(webapp2.RequestHandler):
+  def post(self):
+    phone_number = self.request.get('phone_number')
+    session = dispatcher.run(phone_number, "")
+
+    reply = []
+    for msg in session:
+      reply.append(msg.body)
+      msg.put()
+
+    message = "\n".join(reply)
+    client = TwilioRestClient(config.get('Twilio', 'account_sid'), config.get('Twilio', 'auth_token'))
+    resp = client.messages.create(to=phone_number, from_="8317774824", body=message)
+    logging.info("Intro sent to %s", phone_number)
+    self.redirect('/admin')
+
+
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
@@ -131,6 +167,8 @@ app = webapp2.WSGIApplication([
     ('/reset', ResetHandler),
     ('/twilio', TwilioHandler),
     ('/admin', AdminHandler),
+    ('/intro', IntroHandler),
+    webapp2.Route('/admin/users/<phone_number>', UserHandler, 'user-detail'),
     ('/validate', ValidateHandler),
     ('/cron', CronHandler),
 ], debug=True)

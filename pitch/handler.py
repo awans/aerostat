@@ -362,7 +362,7 @@ class Location(object):
         self.tag = tag
         self.enter = enter
         self.actions = {a.tag: a for a in actions}
-        self.actions.update(default_actions)
+        # self.actions.update(default_actions)
 
     def go(self):
         return GoTo(self.enter_node)

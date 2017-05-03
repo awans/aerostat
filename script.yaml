@@ -19,9 +19,9 @@ locations:
   - 1.1-investigate:
       enter: >
         On your hands and knees, you look under the bed to find a stag as small as a housecat.
-        Its fur is glowing white with the color of polished ivory; the stag is the source of
-        the light trickling across the floor. Its dark eyes are locked on you, afraid. Its
-        antlers look like the twigs of a birch tree. You can CRAWL under the bed after it
+        His fur is glowing white with the color of polished ivory; the stag is the source of
+        the light trickling across the floor. His dark eyes are locked on you, afraid. His
+        antlers look like the twigs of a birch tree. You can CRAWL under the bed after him
         or REACH out and offer this small creature your hand.
       actions:
         crawl:
@@ -29,8 +29,7 @@ locations:
               The stag sees you moving and turns to run. He races out the other side of the
               bed and bolts towards a table in the corner of the room. As he gets closer his
               light reveals a small tunnel underneath the table. He darts inside. You get back
-              on your hands and knees and follow him inside. After a struggle, you manage to pull
-              the door open. Whew.
+              on your hands and knees and follow him.
           - goto: 2.0-crawl
             delay: 12h
         reach:
@@ -68,8 +67,8 @@ locations:
   - 1.3-reach:
       enter:
         - say: >
-            Your hand is outstretched. The stag watches it for only a moment and then with the faintest of steps
-            it walks towards you pausing just short of touch. You are still. His fur glows white. He steps forward
+            The stag watches for a moment longer and then with the faintest of steps
+            he walks towards you pausing just short of touch. You are still. His fur glows white. He steps forward
             pressing his hoof onto your hand. He steps harder. He seems to weigh more than should be possible:
             the hoof pressing firm enough to hurt. He looks up from your hand and locks his eyes with yours.
             They were a deep brown with wide black pupils. They were. As your gazes meet the darkness in the stag's
@@ -79,8 +78,8 @@ locations:
         - say: >
             You've been transfixed and surely only moments have passed as the brown disappears below the surface of his
             eyes. There is no life in them. Your hand hurts as he pins it in place with his small hoof. The eyes are
-            pitch voids now and just as the last trace of brown is submerged you hear it speak. Its mouth doesn't move,
-            of that much you're sure. But the sound fills your mind just the same. You hear/think them say:
+            pitch voids now and just as the last trace of brown is submerged you hear him speak. His mouth doesn't move,
+            of that much you're sure. But the sound fills your mind just the same. You think him saying:
             IS NOT MEANT FOR ONE SO SILENT. YOU WHO CANNOT MAKE OUR MUSIC. YOU WHO CANNOT BELONG. FOLLOW THE TALL TREES
             TO THE CLEARING. DRINK WHAT'S OFFERED TO HEAR OUR SONG.
           delay: 1m
@@ -93,7 +92,7 @@ locations:
                 The strangeness of the stag holds some power over you and you can't just let it skulk away. You crawl
                 under the table and just catch glimpse of the stag calmly walking into a small crawlspace in the back
                 corner of the room. He must have heard you and he turns back to entertain your gaze. His eyes have
-                returned to rich brown. He entertains your gaze for just a moment longer before turning around and
+                returned to rich brown. He looks at you for just a moment longer before turning around and
                 running down the tunnel ahead. In this tight space, he's much faster than you are but you crawl on
                 after him nonetheless.
             - goto: 2.0-crawl
@@ -107,7 +106,7 @@ locations:
             - say: >
                 The house is in a clearing in the middle of a forest of tall trees. You remember the stag's
                 instructions and decide to follow the tall trees and explore the strangeness of this place.
-              delay: 8m
+              delay: 4h
             - say: >
                 You've walked for hours in the great forest. You can tell that the sun is readying to rise.
                 Dawn casts new shadows through the trees and as it does, you hear something different.
@@ -117,6 +116,7 @@ locations:
               delay: 10m
             - say: >
                 The new sun has fully risen and still you walk.
+              delay: 6h
             - goto: 4.1-wandering
   - 2.0-crawl:
       enter: >
@@ -155,7 +155,7 @@ locations:
             delay: 6h
   - 2.1-fear:
       enter: >
-        You're thirsty and scared. Your hands are raw from the rough Your muscles are cramping badly and you
+        You're thirsty and scared. Your hands are raw from the rough ground. Your muscles are cramping badly and you
         worry that you don't have the energy to turn back and retrace your crawl. You could try to SLEEP here
         in the darkness or spend the last of your energy going FORWARD and hope for an escape.
       actions:
@@ -201,7 +201,7 @@ locations:
               Suddenly, you feel the walls of the tunnel start to shift and move around you. You look up, and though
               you don't trust your tired eyes, the walls seem to be flowing. The floor of the tunnel starts to lift up
               beneath you, and the passageway closes behind you. You find yourself being mysteriously lifted up.
-              You wonder if this is what dying feels like, but suddenly the ceiling of the tunnel opens up around you,
+              You wonder if this is what dying feels like, but suddenly the ceiling of the tunnel opens above you,
               flooding your eyes with light. Blinded for a moment, you fade to trees, lush green grass, and -- the stag
               running away in the distance.
             delay: 1m
@@ -227,7 +227,7 @@ locations:
               Things feel different. Your hand is moving so slowly. It's as if the air has become thick and your movement
               through it is like dragging your arm through mud. You're almost frozen. You command your muscles to move more
               quickly but nothing happens: your arm inches towards the table as if it can hardly move at all. Not good.
-          - goto: 3.1-drink
+          - goto: end
             delay: 15m
         explore:
           - say: >
@@ -239,17 +239,9 @@ locations:
               see is a small black ripple spread out across the table from the point where the stream made contact. You're
               scared. You push back away from the table and get up and practically run towards the woods. You don't know what
               this place is, but you don't like. You're going to get as far away as possible.
-          - goto: 3.2-leave-table
+          - goto: 3.1-leave-table
             delay: 6h
-  - 3.1-drink:
-      enter: >
-        You put the white fluid to your lips and drink, deeply. It tastes so smokey. Its whiteness starts to remind you less
-        of milk and more of the exhaust from factory chimneys. It's cold on your lips but it makes you feel warm inside. It's
-        pleasant but so strange. You drink it all. You move to place the goblet back on the table. Things feel different. Your
-        hand is moving so slowly. It's as if the air has become thick and your movement through it is like dragging your arm
-        through mud. You're almost frozen. You command your muscles to move more quickly but nothing happens: your arm inches
-        towards the table as if it can hardly move at all. Not good.
-  - 3.2-leave-table:
+  - 3.1-leave-table:
       enter: >
         You make your way through the trees, the black ooze seeming more menacing by the moment. You begin to notice that it
         seems to be flowing gently, but only on some of the trees. One very large tree in particular seems to have a more
@@ -284,7 +276,8 @@ locations:
               and nearly have to throw yourself on the ground out to avoid being trapped inside.
             delay: 2m
           - say: >
-              Shaken, you begin to wander again. The ooze seems to have an incredible power, and one that you don't have the faintest understanding, or control of. Slowly, you make your way to the lake.
+              Shaken, you begin to wander again. The ooze seems to have an incredible power, and one that you don't
+              have the faintest understanding, or control of. Slowly, you make your way to the lake.
           - goto: 5.0-lake
             delay: 10m
   - 4.0-door:
@@ -400,3 +393,8 @@ locations:
             You make your way down to the lakeshore and find a sandy seat beside the lapping water.
             You take off a shoe and touch your toes against the water. It's warm and cool.
         - goto: end
+  - end:
+      enter:
+        - say: >
+            You've reached the end of Chapter 1 of Pitch. The world has melted into greater clarity, but there is much
+            left to be heard and some still to be seen. Stay, wait, wonder.

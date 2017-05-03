@@ -179,7 +179,6 @@ class Node(object):
           multiple = 1
         else:
           logging.error("INVALID SPEC")
-        multiple = 1
         sleep_until = now + datetime.timedelta(seconds=number * multiple)
         self.current_visit.sleep_until = sleep_until
 

@@ -66,9 +66,58 @@ locations:
           - goto: 4.0-door
             delay: 1m
   - 1.3-reach:
-      enter: >
-        (TODO Describe hanging out with the stag for longer)
+      enter:
+        - say: >
+            Your hand is outstretched. The stag watches it for only a moment and then with the faintest of steps
+            it walks towards you pausing just short of touch. You are still. His fur glows white. He steps forward
+            pressing his hoof onto your hand. He steps harder. He seems to weigh more than should be possible:
+            the hoof pressing firm enough to hurt. He looks up from your hand and locks his eyes with yours.
+            They were a deep brown with wide black pupils. They were. As your gazes meet the darkness in the stag's
+            eyes begins to change. The blackness of the pupils spreads out across his eyes like squid ink flowing
+            over the surface of rich coffee.
+          delay: 1m
+        - say: >
+            You've been transfixed and surely only moments have passed as the brown disappears below the surface of his
+            eyes. There is no life in them. Your hand hurts as he pins it in place with his small hoof. The eyes are
+            pitch voids now and just as the last trace of brown is submerged you hear it speak. Its mouth doesn't move,
+            of that much you're sure. But the sound fills your mind just the same. You hear/think them say:
+            IS NOT MEANT FOR ONE SO SILENT. YOU WHO CANNOT MAKE OUR MUSIC. YOU WHO CANNOT BELONG. FOLLOW THE TALL TREES
+            TO THE CLEARING. DRINK WHAT'S OFFERED TO HEAR OUR SONG.
+          delay: 1m
+        - say: >
+            He steps back and turns away, walking briskly under a table in the corner of the room and out of sight.
+            You could dare to FOLLOW him, or perhaps be safer and walk out the DOOR of the room and see what's beyond.
       actions:
+          follow:
+            - say: >
+                The strangeness of the stag holds some power over you and you can't just let it skulk away. You crawl
+                under the table and just catch glimpse of the stag calmly walking into a small crawlspace in the back
+                corner of the room. He must have heard you and he turns back to entertain your gaze. His eyes have
+                returned to rich brown. He entertains your gaze for just a moment longer before turning around and
+                running down the tunnel ahead. In this tight space, he's much faster than you are but you crawl on
+                after him nonetheless.
+            - goto: 2.0-crawl
+              delay: 12h
+          door:
+            - say: >
+                You can't see the stag any longer. You turn away and walk towards the room's lone door. You push.
+                The black wood is surprisingly soft to your touch. You walk through the doorway into the outside.
+                It's night and it takes your eyes a moment to adjust.
+              delay: 1m
+            - say: >
+                The house is in a clearing in the middle of a forest of tall trees. You remember the stag's
+                instructions and decide to follow the tall trees and explore the strangeness of this place.
+              delay: 8m
+            - say: >
+                You've walked for hours in the great forest. You can tell that the sun is readying to rise.
+                Dawn casts new shadows through the trees and as it does, you hear something different.
+                The stillness of the night forest has been softly accompanied by a new faint sound of
+                bells playing across the early morning. You're deeply lost but you decide to let the new
+                sound guide you.
+              delay: 10m
+            - say: >
+                The new sun has fully risen and still you walk.
+            - goto: 4.1-wandering
   - 2.0-crawl:
       enter: >
         Your lumbering crawl was no match for the stag's quick canter. You lost sight of him in the tunnel
@@ -200,6 +249,44 @@ locations:
         hand is moving so slowly. It's as if the air has become thick and your movement through it is like dragging your arm
         through mud. You're almost frozen. You command your muscles to move more quickly but nothing happens: your arm inches
         towards the table as if it can hardly move at all. Not good.
+  - 3.2-leave-table:
+      enter: >
+        You make your way through the trees, the black ooze seeming more menacing by the moment. You begin to notice that it
+        seems to be flowing gently, but only on some of the trees. One very large tree in particular seems to have a more
+        complicated motion. You stop to investigate it, and notice that there's a small metal cone hanging sideways from
+        one of the low branches, open end towards the wind so it whistles gently with each gust. You can pick up the cone
+        and BLOW or CONTINUE walking.
+      actions:
+        blow:
+          - say: >
+              You hold the silver cone for a moment, and see its intricacy. Inside it is made of a complicated series of
+              chambers that seem to twist among themselves. You bring the cone up to your lips, breathe deeply, and
+              begin to empty your lungs into the thing. It makes a moving, dynamic sound, surprisingly quiet and
+              complicated. It's almost as if an entire song, or more is somehow spatially programmed into this one
+              static horn. The ooze on the tree at once responds, and seems to open a short doorway into the body of the tree.
+            delay: 1m
+          - say: >
+              You walk up to the doorway, and feel your heart beating in your chest. Bending down slightly, you peek your
+              head in. The inside is somehow lit with a soft glow that seems to be coming from the tree walls themselves.
+              Stunningly, you see a table that seems to be forming from the tree floor before your eyes. On the walls, there
+              are quickly flowing patterns.
+            delay: 2m
+          - say: >
+              As you squeeze into the room, you're suddenly aware of a strange ringing that, at first, seemed
+              like it came from the cone, but now you realize is coming from the room itself. You notice that the
+              room seems larger than before; you no longer would need to duck to fit under the doorway; indeed the
+              entire tree seems to have grown to accommodate a table, some benches, and some odd looking equipment.
+            delay: 2m
+          - say: >
+              You're running your hands along the room's wall when the sound suddenly stops. All at once, the room
+              seems to start to shrink. The table begins to melt back into the floor. You stare with wonder for a
+              moment, when suddenly you notice the doorway shrinking back down. In a panic, you run towards it,
+              and nearly have to throw yourself on the ground out to avoid being trapped inside.
+            delay: 2m
+          - say: >
+              Shaken, you begin to wander again. The ooze seems to have an incredible power, and one that you don't have the faintest understanding, or control of. Slowly, you make your way to the lake.
+          - goto: 5.0-lake
+            delay: 10m
   - 4.0-door:
       enter:
         - say: >
@@ -212,6 +299,9 @@ locations:
             is no rustling of leaves from the trees. Instead there is the faintest tinkling sound coming from the woods ahead.
             You decide to investigate.
           delay: 12h
+        - goto: 4.1-wandering
+  - 4.1-wandering:
+      enter:
         - say: >
             You've been wandering through the trees for many hours now, following the treble notes playing off the breeze. The
             sun is still shining brightly but the shade of the great trees has kept you cool and feeling fresh. The sounds are
@@ -232,7 +322,7 @@ locations:
           - say: >
               You lie on your back on the soft grass, looking up at the dark trees, the sea-blue sky and the silver chimes.
               You watch.
-          - goto: 4.1-chimes
+          - goto: 4.2-chimes
             delay: 15m
         wander:
           - say: >
@@ -240,7 +330,7 @@ locations:
               toes against the water. It's warm and cool.
           - goto: 5.0-lake
             delay: 12h
-  - 4.1-chimes:
+  - 4.2-chimes:
       enter:
         - say: >
             It's happened four times now: the smallest chime mysteriously clanging anew. With each fresh ring you can clearly see

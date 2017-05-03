@@ -17,6 +17,8 @@ class Transition(object):
 class GetMessage(Transition):
     def execute(self, dispatcher, curr_visit, session):
         curr_visit.next_node = self.to_node
+        curr_visit.transition_executed = True
+        curr_visit.put()
         return session
 
 
@@ -24,17 +26,6 @@ class GoTo(Transition):
     def execute(self, dispatcher, curr_visit, session):
         curr_visit.next_node = self.to_node
         curr_visit.put()
-        session = dispatcher.dispatch(curr_visit.user.get().phone_number, None, session)
-        return session
-
-
-class GoBack(GoTo):
-    def __init__(self):
-        super(GoBack, self).__init__("")
-
-    def execute(self, dispatcher, curr_visit, session):
-        curr_visit.next_node = self.to_node
-        # look up the previous visit for this user
         session = dispatcher.dispatch(curr_visit.user.get().phone_number, None, session)
         return session
 
@@ -92,6 +83,7 @@ class Dispatcher(object):
             try:
               node = self.graph.get(prev_visit.next_node)
             except KeyError:
+              logging.error("No next node found -- wanted %s", prev_visit.next_node)
               # bad state; start over
               node = self.graph.start_node
               prev_app_state = None
@@ -140,7 +132,6 @@ class Graph(object):
         return self.nodes[name]
 
     def build(self, script):
-      self.register(HelpNode())
       for i, location_dict in enumerate(script['locations']):
         for location_spec in location_dict.items():
           location = parse_location(location_spec)
@@ -222,18 +213,9 @@ class Action(object):
     self.effects = effect_list
 
 
-class HelpNode(Node):
-  def __init__(self):
-    self.name = "help"
-
-  def handle(self, state, message):
-    self.send("There is no help")
-    return GoBack()
-
-
 class EffectNode(Node):
   def __repr__(self):
-    return "%s:%s:%s" % (self.name, self.effect, self.next_node.name if self.next_node else None)
+    return "%s:%s" % (self.name, self.next_node.name if self.next_node else None)
 
 
   def __init__(self, name, effect, next_node, choice_node_next=False):
@@ -293,8 +275,12 @@ def parse_effect(effect_spec):
   if "delay" in effect_spec:
     delay = effect_spec.pop("delay")
 
-  key = effect_spec.keys()[0]
-  val = effect_spec.values()[0]
+  try:
+    key = effect_spec.keys()[0]
+    val = effect_spec.values()[0]
+  except:
+    print effect_spec
+    raise
   if key == "say":
     return Say(val, delay)
   elif key == "goto":
@@ -323,8 +309,12 @@ def parse_location(location_spec):
   """
   location_tag = location_spec[0]
   properties = location_spec[1]
-  enter = parse_effect_list(properties['enter'])
-  actions = parse_actions(properties.get('actions', None))
+  try:
+    enter = parse_effect_list(properties['enter'])
+    actions = parse_actions(properties.get('actions', None))
+  except:
+    print location_spec
+    raise
   return Location(location_tag, enter=enter, actions=actions)
 
 
@@ -362,7 +352,6 @@ class Location(object):
         self.tag = tag
         self.enter = enter
         self.actions = {a.tag: a for a in actions}
-        # self.actions.update(default_actions)
 
     def go(self):
         return GoTo(self.enter_node)
@@ -381,8 +370,9 @@ class Location(object):
         enter_effect_nodes[-1].next_node = choice_node
         enter_effect_nodes[-1].choice_node_next = True
 
-        enter_node = enter_effect_nodes[0]
-        nodes[0] = enter_node
+        self.enter_node = enter_effect_nodes[0]
+        nodes += enter_effect_nodes[1:]
+        nodes[0] = self.enter_node
         return nodes
 
 

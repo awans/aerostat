@@ -172,7 +172,7 @@ class Node(object):
         now = datetime.datetime.now()
         number, unit = int(delay_spec[:-1]), delay_spec[-1:]
         if unit == "h":
-          multiple = 60 * 24
+          multiple = 60 * 60
         elif unit == "m":
           multiple = 60
         elif unit == "s":

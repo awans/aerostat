@@ -143,7 +143,25 @@ locations:
             delay: 1m
         forward:
           - say: >
-              (TODO Say something about final push out of tunnel)
+              You've strained past what you thought possible. It's amazing how in the face of continued suffering,
+              it's not so much that it gets easier, but you're willing to accept it being worse and worse than you
+              thought you could. You can lift your arms, with effort, but getting them to hold your weight is
+              impossible. You lay your head down, and breathe for a moment.
+            delay: 1m
+          - say: >
+              Suddenly, you feel the walls of the tunnel start to shift and move around you. You look up, and though
+              you don't trust your tired eyes, the walls seem to be flowing. The floor of the tunnel starts to lift up
+              beneath you, and the passageway closes behind you. You find yourself being mysteriously lifted up.
+              You wonder if this is what dying feels like, but suddenly the ceiling of the tunnel opens up around you,
+              flooding your eyes with light. Blinded for a moment, you fade to trees, lush green grass, and -- the stag
+              running away in the distance.
+            delay: 1m
+          - say: >
+              After a moment's rest, you begin to really look around. The tunnel is completely gone, and the ground
+              you had been resting on is just inert earth. You see a lake nearby, and the thought of drinking from
+              it is as irresistible as it is sustaining. You begin to crawl towards the lake.
+          - goto: 5.0-lake
+            delay: 4m
   - 3.0-table:
       enter: >
         You notice a hundred feet away ahead of you there is a table. It's smooth and black as pitch. You walk towards it.
@@ -286,3 +304,9 @@ locations:
               You're almost at the clearing now and you can see that there's something at its center. You walk on.
           - goto: 3.0-table
             delay: 10m
+  - 5.0-lake:
+      enter:
+        - say: >
+            You make your way down to the lakeshore and find a sandy seat beside the lapping water.
+            You take off a shoe and touch your toes against the water. It's warm and cool.
+        - goto: end

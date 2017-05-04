@@ -128,6 +128,11 @@ class CronHandler(webapp2.RequestHandler):
     logging.info("Cron found: %s", visits_to_wake_up)
     for visit in visits_to_wake_up:
       user = visit.user.get()
+      if not user:
+        # failed, or reset a user
+        visit.transition_executed = True
+        visit.put()
+        continue
       session = dispatcher.run(user.phone_number, None)
 
       reply = []

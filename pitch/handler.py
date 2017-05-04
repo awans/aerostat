@@ -77,6 +77,7 @@ class Dispatcher(object):
               return session
             else:
               prev_visit.transition_executed = True
+              prev_visit.put()
 
             logging.info("found prev_visit %s", prev_visit.key.id())
 
@@ -85,8 +86,7 @@ class Dispatcher(object):
             except KeyError:
               logging.error("No next node found -- wanted %s", prev_visit.next_node)
               # bad state; start over
-              node = self.graph.start_node
-              prev_app_state = None
+              return
 
             if prev_visit.application_state:
                 prev_app_state = prev_visit.application_state.get()
@@ -244,6 +244,7 @@ class ChoiceNode(Node):
         self.effect_chains = effect_chains
 
     def handle(self, state, message):
+        message = message or ""
         effects = self.effect_chains.get(message.lower())
         if not effects:
           self.send("I didn't understand that.")

@@ -7,13 +7,17 @@
     <h1>Pitch</h1>
     <a href="/admin">&larr; Back</a>
 
-    <h2>Conversation to date with {{ user.phone_number }}</h2> 
-
+    <h2>Conversation to date with {{ user.phone_number }}</h2>
     {% for visit in visits %}
-    <div> {{ visit.current_node }} {% for message in visit.messages %}
+    <h1>{{visit.current_node }}</h1>
+    <h3>Messages sent:</h3>
+    {% for message in visit.messages %}
         <div>{{ message.body }}</div>
-        {% endfor %} - sleep until: {{ visit.sleep_until }}
-    </div>
+    {% endfor %}
+    <h3>App state</h3>
+    <div>we sleep until: {{ visit.sleep_until }}</div>
+    <div>executed? {{ visit.transition_executed }}</div>
+    <div>transition to {{ visit.next_node }}</div>
     {% endfor %}
     <form action="/message" method="POST">
         <input type="hidden" name="phone_number" value="{{ user.phone_number }}"/>
